@@ -1,6 +1,7 @@
 import { generateManifest } from '@lib/utils';
 import OpenAI from 'openai';
 import { v2 as cloudinary } from 'cloudinary';
+import crypto from 'crypto';
 
 const openai = new OpenAI({
   apiKey: process.env.OPEN_AI_API_KEY,
@@ -59,28 +60,38 @@ export async function POST(req: Request) {
     const results = await Promise.all(promises);
 
     const timestamp = Math.round(new Date().getTime() / 1000);
-
-    const signature = cloudinary.utils.api_sign_request(
-      {
-        api_key: process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY as string,
-        timestamp: timestamp,
-      },
-      process.env.CLOUDINARY_API_SECRET as string,
+    const manifest_json = JSON.stringify(
+      generateManifest({
+        videoUrls: results.map((result) => {
+          return result.public_id;
+        }),
+      }),
     );
 
-    const result = await fetch('https://api.cloudinary.com/v1_1/videoapi-demo/video/create_video', {
+    const cloudinaryParams = {
+      manifest_json,
+      timestamp: timestamp,
+    };
+
+    // Ordena los parámetros por clave alfabéticamente
+    const paramsToSign = Object.keys(cloudinaryParams)
+      .sort()
+      .map((key) => `${key}=${cloudinaryParams[key]}`)
+      .join('&');
+
+    // Firma usando SHA-1
+    const signature = crypto
+      .createHash('sha1')
+      .update(paramsToSign + process.env.CLOUDINARY_API_SECRET)
+      .digest('hex');
+
+    const result = await fetch('https://api.cloudinary.com/v1_1/dv3z6ozcj/video/create_video', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        manifest_json: JSON.stringify(
-          generateManifest({
-            videoUrls: results.map((result) => {
-              return result.public_id;
-            }),
-          }),
-        ),
+        manifest_json,
         signature,
         api_key: process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY as string,
         timestamp,

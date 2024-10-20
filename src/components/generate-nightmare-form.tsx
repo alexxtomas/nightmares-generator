@@ -13,10 +13,9 @@ import {
 } from '@components/ui/form';
 import { Button } from './ui/button';
 import { Textarea } from './ui/textarea';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CldVideoPlayer } from 'next-cloudinary';
 import 'next-cloudinary/dist/cld-video-player.css';
-import { generateManifest } from '@lib/utils';
 
 const FormSchema = z.object({
   fearsDescriptionPrompt: z
@@ -50,38 +49,16 @@ export function GenerateNightmareForm() {
       .then((res) => res.json())
       .then((data) => {
         console.log({ data: JSON.stringify(data) });
-        fetch('https://api.cloudinary.com/v1_1/videoapi-demo/video/create_video', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            manifest_json: JSON.stringify(
-              generateManifest({
-                videoUrls: data.images,
-              }),
-            ),
-            upload_preset: 'wl4anppv',
-          }),
-        })
-          .then((res) => res.json())
-          .then((result) => {
-            console.log({ result });
-
-            return new Response(
-              JSON.stringify({
-                public_id: result.public_id,
-              }),
-              {
-                status: 200,
-              },
-            );
-          });
+        setPublicId(data.public_id);
       })
       .catch(() => {
         setStatus('error');
       });
   }
+
+  useEffect(() => {
+    console.log({ publicId });
+  }, [publicId]);
 
   return (
     <section className="flex flex-col gap-4">
