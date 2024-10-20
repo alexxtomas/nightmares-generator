@@ -1,101 +1,55 @@
-import Image from "next/image";
+import { GenerateNightmareForm } from '@components/generate-nightmare-form';
+import { Label } from '@components/ui/label';
+import { Textarea } from '@components/ui/textarea';
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <main className="max-w-2xl flex flex-col justify-center mx-auto">
+      <article className="px-4 py-12 space-y-8">
+        <header>
+          <h2 className="text-3xl font-bold tracking-tight text-center mb-4 relative">
+            Create Your Worst Nightmare
+            <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-primary rounded-full"></span>
+          </h2>
+        </header>
+        <section className="prose prose-lg prose-invert">
+          <p>
+            Ever wondered what your deepest fears would look like if they came to life? Welcome to
+            the ultimate fear experience. With our cutting-edge AI-driven app, you can describe the
+            things that terrify you the most, and we’ll transform your words into a personalized
+            video of your worst nightmare. Whether it’s haunted houses, lurking shadows, or eerie
+            creatures, our app brings your fears to life in terrifyingly vivid detail. It’s not just
+            about facing your fears—it's about seeing them unfold right before your eyes.
+          </p>
+          <h3 className='text-xl font-semibold mt-6 "'>How It Works: </h3>
+          <ul className="space-y-4 list-none pl-0 mt-4">
+            <li className="flex items-start">
+              <span className="inline-flex items-center justify-center w-6 h-6 mr-2 text-sm font-semibold text-white bg-primary rounded-full">
+                1
+              </span>
+              Describe Your Fears: Tell us what scares you the most in your own words.
+            </li>
+            <li className="flex items-start">
+              <span className="inline-flex items-center justify-center w-6 h-6 mr-2 text-sm font-semibold text-white bg-primary rounded-full">
+                2
+              </span>
+              Let AI Do the Magic: Our powerful AI processes your description and generates a
+              spine-chilling video based on your worst fears.
+            </li>
+            <li className="flex items-start">
+              <span className="inline-flex items-center justify-center w-6 h-6 mr-2 text-sm font-semibold text-white bg-primary rounded-full">
+                3
+              </span>
+              Experience the Horror: Watch your personalized nightmare come to life.
+            </li>
+          </ul>
+        </section>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+        <footer className="mt-8 pt-8 text-cl text-muted-foreground flex items-center justify-between">
+          Dare to step into your own fears? Create your nightmare now—if you’re brave enough!
+        </footer>
+      </article>
+      <GenerateNightmareForm />
+    </main>
   );
 }
